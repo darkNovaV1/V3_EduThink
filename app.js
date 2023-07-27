@@ -13,11 +13,32 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// Set the template engine to EJS
+app.set("view engine", "ejs");
+
+// --------------> Set up Routes <---------------------
+
+// Define the routes and their respective paths
+const routes = [
+  { path: "/login", router: require("./routes/login") },
+  { path: "/signup", router: require("./routes/signup") },
+  ,
+];
+
+// Register the routes with their respective paths
+routes.forEach((route) => {
+  app.use(route.path, route.router);
+});
+
+
 //---------------> testing <-----------------------------
 
 app.get('/',(req,res)=>{
     res.sendFile('./index.html');
 })
+
+
+
 
 // --------------> Start the Server <---------------------
 
